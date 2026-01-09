@@ -5,9 +5,6 @@ import { ApiResponse } from "../utils/ApiResponse.js"
 import transporter from "../utils/nodeMailer.js"
 
 
-// console.log(process.env.
-// SMTP_USER)
-// console.log(process.env.SMTP_PASS);
 
 const generateJwtTokenForUser = async function (userid) {
 

@@ -38,14 +38,13 @@ const userSchema = new mongoose.Schema({
     }
 },{timestamps: true})
 
-// 'next' ko nikal diya gaya hai
 userSchema.pre("save", async function() {
 
-    if (!this.isModified("password")) return; // return karke function exit kar dein
+    if (!this.isModified("password")) return; 
 
     this.password = await bcrypt.hash(this.password, 10);
     
-    // next() ki zaroorat nahi hai, async function apne aap complete ho jayega
+    
 });
 
 userSchema.methods.isPasswordCorrect = async function (password){
