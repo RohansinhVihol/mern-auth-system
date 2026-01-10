@@ -9,7 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 const App = () => {
   return (
     <>
-    <ToastContainer/>
+    <ToastContainer position="top-right" autoClose={3000}/>
     <Routes>
       <Route path='/' element={<Home/>}/>
       <Route path='/login' element={<Login/>}/>

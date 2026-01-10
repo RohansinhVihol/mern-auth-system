@@ -27,16 +27,20 @@ const Login = () => {
         if(data.success){
           setIsLoggedin(true)
           navigate("/")
-          toast.message(data.message)
+          toast.success(data.message)
         }else{
           toast.error(data.message)
         }
    
       }
 
-
     } catch (error) {
-      toast.error(error)
+      const msg = error.response?.data?.message || error.message || "Something went wrong";
+  toast.error(msg);
+   console.log(error);
+   
+      console.log(msg);
+      
     }
 
   }
