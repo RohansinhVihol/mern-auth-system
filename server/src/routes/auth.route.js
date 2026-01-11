@@ -9,7 +9,7 @@ router.route('/login').post(login)
 router.route('/logout').post(logout)
 router.route('/send-verify-otp').post(verifyJWT,sendVerifyOtp)
 router.route('/verify-account').post(verifyJWT,verifyEmail)
-router.route('/is-auth').post(verifyJWT,isAuthenticated)
+router.route('/is-auth').get(verifyJWT,isAuthenticated)
 router.route('/send-reset-otp').post(sendPassResetOtp)
 router.route('/reset-password').post(resetPassword)
 
