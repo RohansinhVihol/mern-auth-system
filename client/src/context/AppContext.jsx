@@ -10,6 +10,8 @@ export const AppContextProvider = ({ children }) => {
   const [userData, setUserData] = useState(false);
 
   const [error, setError] = useState("")
+  const [loading , setLoading] = useState(false)
+
 
   axios.defaults.withCredentials = true;
 
@@ -60,6 +62,8 @@ export const AppContextProvider = ({ children }) => {
     userData,
     setUserData,
     getUserData,
+    loading,
+    setLoading
   };
 
   return <AppContent.Provider value={value}>{children}</AppContent.Provider>;

@@ -7,11 +7,15 @@ import { toast } from "react-toastify";
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const { userData, backendUrl, setUserData, setIsLoggedin } = useContextData();
+  const { userData, backendUrl, setUserData, setIsLoggedin, setLoading , loading} = useContextData();
+
+
 
   const sendVerificationOtp = async () => {
     try {
       axios.defaults.withCredentials = true;
+
+      setLoading(true)
 
       const { data } = await axios.post(
         backendUrl + "/api/auth/send-verify-otp"
@@ -34,6 +38,9 @@ const Navbar = () => {
       }
       
       toast.error(msg);
+    }
+    finally{
+      setLoading(false)
     }
   };
 
@@ -76,7 +83,7 @@ const Navbar = () => {
                 <li 
                 onClick={sendVerificationOtp}
                 className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
-                  Verify Email
+                  {loading ? "Sending Otp.." : "Verify Otp"}
                 </li>
               )}
               <li
