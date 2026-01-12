@@ -163,6 +163,11 @@ const sendVerifyOtp = asyncHandler(async (req, res) => {
         throw new ApiError(409, "User Already Verified")
     }
 
+     if (user.verifyOtp && user.verifyOtpExpireAt > Date.now()) {
+        throw new ApiError(429, "OTP already sent, please wait")
+    }
+
+
     const otp = String(Math.floor(100000 + Math.random() * 900000))
 
     const mailOption = {
@@ -205,6 +210,7 @@ const verifyEmail = asyncHandler(async (req, res) => {
         throw new ApiError(400, "OTP not found")
     }
 
+    
     if (user.verifyOtpExpireAt < Date.now()) {
      
         user.verifyOtp = '';
@@ -213,9 +219,7 @@ const verifyEmail = asyncHandler(async (req, res) => {
         throw new ApiError(410, "OTP expired, please request a new one");
     }
 
-    if (user.verifyOtp !== otp) {
-        throw new ApiError(400, "Invalid OTP")
-    }
+    
     user.isAccountVerified = true;
     user.verifyOtp = '';
     user.verifyOtpExpireAt = 0;

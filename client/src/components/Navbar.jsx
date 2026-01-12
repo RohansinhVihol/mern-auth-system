@@ -9,24 +9,51 @@ const Navbar = () => {
   const navigate = useNavigate();
   const { userData, backendUrl, setUserData, setIsLoggedin } = useContextData();
 
-  const logout = async () =>{
+  const sendVerificationOtp = async () => {
     try {
-      axios.defaults.withCredentials = true
-      const {data} = await axios.post(backendUrl + "/api/auth/logout")
-      if(data.success){
-        setIsLoggedin(false)
-        setUserData(false)
-        navigate("/")
+      axios.defaults.withCredentials = true;
+
+      const { data } = await axios.post(
+        backendUrl + "/api/auth/send-verify-otp"
+      );
+
+      if (data.success) {
+        navigate("/email-verify");
+        console.log(data);
+        
+        toast.success(data.message)
       }
     } catch (error) {
-      const msg = error.response?.data?.message ||
+      const msg =
+        error.response?.data?.message ||
         error.message ||
         "Something went wrong";
-      toast.error(msg)
-    }
-  }
 
- 
+      if(error.response?.data?.statusCode == 429){
+        navigate("/email-verify")
+      }
+      
+      toast.error(msg);
+    }
+  };
+
+  const logout = async () => {
+    try {
+      axios.defaults.withCredentials = true;
+      const { data } = await axios.post(backendUrl + "/api/auth/logout");
+      if (data.success) {
+        setIsLoggedin(false);
+        setUserData(false);
+        navigate("/");
+      }
+    } catch (error) {
+      const msg =
+        error.response?.data?.message ||
+        error.message ||
+        "Something went wrong";
+      toast.error(msg);
+    }
+  };
 
   return (
     <div className="w-full flex justify-between items-center p-4 sm:p-6 sm:px-24 absolute top-0 z-50">
@@ -39,18 +66,21 @@ const Navbar = () => {
 
       {userData ? (
         <div className="relative group inline-block">
-        
           <div className="w-8 h-8 flex justify-center items-center rounded-full bg-black text-white cursor-pointer select-none">
             {userData.name?.[0]?.toUpperCase()}
           </div>
 
           <div className="absolute right-0 top-8 hidden group-hover:block bg-white text-black rounded-md shadow-lg min-w-36 ">
             <ul className="text-sm">
-              { !userData.isAccountVerified && <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
-                Verify Email
-              </li>}
+              {!userData.isAccountVerified && (
+                <li 
+                onClick={sendVerificationOtp}
+                className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                  Verify Email
+                </li>
+              )}
               <li
-              onClick={logout}
+                onClick={logout}
                 className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
               >
                 Logout
@@ -60,7 +90,7 @@ const Navbar = () => {
         </div>
       ) : (
         <button
-          onClick={() => navigate("/login")} 
+          onClick={() => navigate("/login")}
           className="flex items-center gap-2 border border-gray-500 rounded-full px-6 py-2 text-gray-800 hover:bg-gray-100 transition"
         >
           Login
