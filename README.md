@@ -139,12 +139,12 @@ root
 Create a `.env` file in backend root:
 
 ```
-PORT=5000
-MONGO_URI=your_mongodb_url
-JWT_SECRET=your_jwt_secret
-EMAIL_USER=your_email@gmail.com
-EMAIL_PASS=your_email_password
-CLIENT_URL=http://localhost:5173
+PORT=*
+MONGO_URI=*
+JWT_SECRET=*
+EMAIL_USER=*
+EMAIL_PASS=*
+CLIENT_URL=*
 ```
 
 ---
