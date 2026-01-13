@@ -117,12 +117,12 @@ const Login = () => {
                 required
               />
             </div>
-            <p
+           {state != "Sign Up" &&  <p
               onClick={() => navigate("/reset-password")}
               className="mb-4 text-indigo-500 cursor-pointer"
             >
               Forgot Passoword?
-            </p>
+            </p>}
             <button className="w-full py-2.5 rounded-full bg-linear-to-br from-indigo-500 to-indigo-900 font-medium text-white ">
               {state}
             </button>
