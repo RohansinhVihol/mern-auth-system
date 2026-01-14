@@ -136,8 +136,6 @@ root
 
 ## ⚙️ Environment Variables
 
-Create a `.env` file in backend root:
-
 ```
 PORT=*
 MONGO_URI=*

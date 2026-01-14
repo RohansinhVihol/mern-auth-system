@@ -72,7 +72,7 @@ const register = asyncHandler(async (req, res) => {
     const mailOption = {
         from: `"Rohan Dev" <${process.env.SENDER_EMAIL}>`,
         to: email,
-        subject: 'Welcome to GreatStack',
+        subject: 'Welcome to MERN AUTH SITE',
         text: `Welcome to greatstack website. Your account has been created with email id: ${email}`
     }
 

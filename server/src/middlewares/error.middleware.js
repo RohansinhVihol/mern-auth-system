@@ -1,8 +1,8 @@
-// src/middleware/error.middleware.js
+
 import { ApiError } from "../utils/ApiError.js";
 
 export const errorHandler = (err, req, res, next) => {
-  console.error(err); // debug ke liye
+  console.error(err); 
 
   const statusCode = err.statusCode || 500;
   const message = err.message || "Something went wrong";

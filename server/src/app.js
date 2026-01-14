@@ -6,7 +6,7 @@ import { errorHandler } from "./middlewares/error.middleware.js";
 
 const app = express();
 
-const allowedOrigins = ["http://localhost:5173" ]
+const allowedOrigins = [process.env.ALLOWED_ORIGIN ] 
 
 app.use(cors({
     origin: allowedOrigins,
