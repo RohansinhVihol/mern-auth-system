@@ -8,6 +8,9 @@ import connectDB from "./db/index.js";
 
 
 
+const PORT = process.env.PORT || 8001;
+
+
 connectDB().
     then(() => {
         app.listen(process.env.PORT || 8001, () => {
