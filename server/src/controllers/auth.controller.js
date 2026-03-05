@@ -3,8 +3,7 @@ import { User } from "../models/user.model.js"
 import { ApiError } from "../utils/ApiError.js"
 import { ApiResponse } from "../utils/ApiResponse.js"
 import transporter from "../utils/nodeMailer.js"
-import { sendEmail } from '../utils/emailService.js'
-
+import { sendEmail } from "../utils/emailService.js"
 
 
 const generateJwtTokenForUser = async function (userid) {
@@ -83,7 +82,11 @@ const register = asyncHandler(async (req, res) => {
 //     } catch (error) {
 //         console.log("Email send failed");
 //    }
-    
+     try {
+        await sendEmail(email, "Welcome", `<p>Account created</p> ${email}`);
+    } catch (error) {
+    console.log("Email sending skipped");
+    }
 
     return res
         .status(201)
