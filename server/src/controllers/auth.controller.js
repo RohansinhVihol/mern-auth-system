@@ -64,7 +64,7 @@ const register = asyncHandler(async (req, res) => {
     const option = {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
-        sameSite: "strict"
+        sameSite: process.env.NODE_ENV === "production" ? "none" : "strict"
     }
 
 
@@ -117,10 +117,10 @@ const login = asyncHandler(async (req, res) => {
 
     const token = await generateJwtTokenForUser(user._id)
 
-    const option = {
+     const option = {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
-        sameSite: "strict"
+        sameSite: process.env.NODE_ENV === "production" ? "none" : "strict"
     }
 
     const safeUser = await User.findById(user._id).select("-password")
@@ -139,8 +139,7 @@ const logout = asyncHandler(async (req, res) => {
     const option = {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
-        sameSite: "strict",
-        path: "/"
+        sameSite: process.env.NODE_ENV === "production" ? "none" : "strict"
     }
 
     return res
