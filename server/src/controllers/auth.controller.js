@@ -3,6 +3,7 @@ import { User } from "../models/user.model.js"
 import { ApiError } from "../utils/ApiError.js"
 import { ApiResponse } from "../utils/ApiResponse.js"
 import transporter from "../utils/nodeMailer.js"
+import { sendEmail } from '../utils/emailService.js'
 
 
 
@@ -69,21 +70,20 @@ const register = asyncHandler(async (req, res) => {
 
 
 
-    const mailOption = {
-        from: `"Rohan Dev" <${process.env.SENDER_EMAIL}>`,
-        to: email,
-        subject: 'Welcome to MERN AUTH SITE',
-        text: `Welcome to greatstack website. Your account has been created with email id: ${email}`
-    }
+//     const mailOption = {
+//         from: `"Rohan Dev" <${process.env.SENDER_EMAIL}>`,
+//         to: email,
+//         subject: 'Welcome to MERN AUTH SITE',
+//         text: `Welcome to greatstack website. Your account has been created with email id: ${email}`
+//     }
 
-    try {
-        const info = await transporter.sendMail(mailOption);
-        console.log("Email sent:", info.response);
-    } catch (error) {
-        console.log("Email send failed");
-   }
+//     try {
+//         const info = await transporter.sendMail(mailOption);
+//         console.log("Email sent:", info.response);
+//     } catch (error) {
+//         console.log("Email send failed");
+//    }
     
-
 
     return res
         .status(201)
