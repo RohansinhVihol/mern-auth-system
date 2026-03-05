@@ -6,10 +6,10 @@ import { errorHandler } from "./middlewares/error.middleware.js";
 
 const app = express();
 
-const allowedOrigins = [process.env.ALLOWED_ORIGIN ] 
+ 
 
 app.use(cors({
-    origin: allowedOrigins,
+    origin: process.env.ALLOWED_ORIGIN ,
     credentials : true,
 }))
 
