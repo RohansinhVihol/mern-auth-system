@@ -80,8 +80,9 @@ const register = asyncHandler(async (req, res) => {
         const info = await transporter.sendMail(mailOption);
         console.log("Email sent:", info.response);
     } catch (error) {
-        throw new ApiError(500, "Email not sent due to sever issue")
-    }
+        console.log("Email send failed");
+   }
+    
 
 
     return res
