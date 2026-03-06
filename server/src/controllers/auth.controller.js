@@ -69,24 +69,36 @@ const register = asyncHandler(async (req, res) => {
 
 
 
-//     const mailOption = {
-//         from: `"Rohan Dev" <${process.env.SENDER_EMAIL}>`,
-//         to: email,
-//         subject: 'Welcome to MERN AUTH SITE',
-//         text: `Welcome to greatstack website. Your account has been created with email id: ${email}`
-//     }
+    //     const mailOption = {
+    //         from: `"Rohan Dev" <${process.env.SENDER_EMAIL}>`,
+    //         to: email,
+    //         subject: 'Welcome to MERN AUTH SITE',
+    //         text: `Welcome to greatstack website. Your account has been created with email id: ${email}`
+    //     }
 
-//     try {
-//         const info = await transporter.sendMail(mailOption);
-//         console.log("Email sent:", info.response);
-//     } catch (error) {
-//         console.log("Email send failed");
-//    }
-     try {
-        await sendEmail(email, "Welcome", `<p>Account created</p> ${email}`);
+    //     try {
+    //         const info = await transporter.sendMail(mailOption);
+    //         console.log("Email sent:", info.response);
+    //     } catch (error) {
+    //         console.log("Email send failed");
+    //    }
+    try {
+        const sent = await sendEmail(
+            email,
+            "Welcome to Rohandev 🎉",
+            `
+        <h2>Welcome to Rohandev 🚀</h2>
+        <p>Hello ${name},</p>
+        <p>Your account has been created successfully.</p>
+        <p>We are happy to have you with us.</p>
+        <p>– Team Rohandev</p>
+        `
+        );
     } catch (error) {
-    console.log("Email sending skipped");
+        console.log("Email sending skipped");
     }
+
+
 
     return res
         .status(201)
@@ -121,7 +133,7 @@ const login = asyncHandler(async (req, res) => {
 
     const token = await generateJwtTokenForUser(user._id)
 
-     const option = {
+    const option = {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         sameSite: process.env.NODE_ENV === "production" ? "none" : "strict"
@@ -166,31 +178,37 @@ const sendVerifyOtp = asyncHandler(async (req, res) => {
         throw new ApiError(409, "User Already Verified")
     }
 
-     if (user.verifyOtp && user.verifyOtpExpireAt > Date.now()) {
+    if (user.verifyOtp && user.verifyOtpExpireAt > Date.now()) {
         throw new ApiError(429, "OTP already sent, please wait")
     }
 
 
     const otp = String(Math.floor(100000 + Math.random() * 900000))
 
-    const mailOption = {
-        from: `"Rohan Dev" <${process.env.SENDER_EMAIL}>`,
-        to: user.email,
-        subject: 'Account Verification OTP',
-        text: `Your OTP is ${otp}. Verify your account using this OTP.`
-    }
+    // const mailOption = {
+    //     from: `"Rohan Dev" <${process.env.SENDER_EMAIL}>`,
+    //     to: user.email,
+    //     subject: 'Account Verification OTP',
+    //     text: `Your OTP is ${otp}. Verify your account using this OTP.`
+    // }
 
     try {
-        await transporter.sendMail(mailOption);
+        const sendmail = await sendEmail(user.email, 'Account Verification OTP', 
+        ` <h2>Verify Your Account 🔐</h2>
+        <p>Hello ${user.name},</p>
+        <p>Your OTP for account verification is:</p>
+        <h1>${otp}</h1>
+        <p>This OTP is valid for 10 minutes.</p>
+        <p>– Team Rohandev</p> ` )
 
-   
+
         user.verifyOtp = otp;
         user.verifyOtpExpireAt = Date.now() + 10 * 60 * 1000;
         await user.save();
 
         res.status(200).json(new ApiResponse(200, {}, "Verification OTP Sent on Email"));
     } catch (error) {
-        
+
         throw new ApiError(500, "Failed to send verification email. Please try again.");
     }
 });
@@ -213,16 +231,16 @@ const verifyEmail = asyncHandler(async (req, res) => {
         throw new ApiError(400, "OTP not found")
     }
 
-    
+
     if (user.verifyOtpExpireAt < Date.now()) {
-     
+
         user.verifyOtp = '';
         user.verifyOtpExpireAt = 0;
         await user.save();
         throw new ApiError(410, "OTP expired, please request a new one");
     }
 
-    
+
     user.isAccountVerified = true;
     user.verifyOtp = '';
     user.verifyOtpExpireAt = 0;
@@ -264,23 +282,46 @@ const sendPassResetOtp = asyncHandler(async (req, res) => {
 
     const otp = String(Math.floor(100000 + Math.random() * 900000))
 
-    const mailOption = {
-        from: `"Rohan Dev" <${process.env.SENDER_EMAIL}>`,
-        to: user.email,
-        subject: 'Password Reset OTP',
-        text: `Your OTP for resetting password is ${otp}. Use this OTP to proceed with resetting your password.`
-    }
+    // const mailOption = {
+    //     from: `"Rohan Dev" <${process.env.SENDER_EMAIL}>`,
+    //     to: user.email,
+    //     subject: 'Password Reset OTP',
+    //     text: `Your OTP for resetting password is ${otp}. Use this OTP to proceed with resetting your password.`
+    // }
+
 
     if (user.resetOtpExpireAt && user.resetOtpExpireAt > Date.now()) {
         throw new ApiError(429, "OTP already sent, please wait")
     }
 
-    try {
-        await transporter.sendMail(mailOption)
-
-        user.resetOtp = otp;
+    user.resetOtp = otp;
         user.resetOtpExpireAt = Date.now() + 10 * 60 * 1000;
         await user.save()
+
+    try {
+        
+    const sentmail = await sendEmail(user.email,"Password Reset OTP",
+        `
+        <div style="font-family: Arial, sans-serif; line-height:1.6;">
+            <h2>Password Reset Request 🔑</h2>
+
+            <p>Hello ${user.name},</p>
+
+            <p>You requested to reset your password. Use the OTP below to continue:</p>
+
+            <h1 style="letter-spacing:4px;">${otp}</h1>
+
+            <p>This OTP is valid for <b>10 minutes</b>.</p>
+
+            <p>If you did not request a password reset, please ignore this email.</p>
+
+            <br>
+
+            <p>– Team Rohandev</p>
+        </div>
+    `
+    )
+
 
         return res
             .status(200)
@@ -289,14 +330,19 @@ const sendPassResetOtp = asyncHandler(async (req, res) => {
             )
 
     } catch (error) {
+
+        user.resetOtp = undefined
+        user.resetOtpExpireAt = undefined
+        await user.save()
+
         throw new ApiError(500, "Failed to send verification email. Please try again.");
     }
 })
 
-const resetPassword = asyncHandler(async(req, res) => {
-    const {email, otp, newPassword} = req.body
+const resetPassword = asyncHandler(async (req, res) => {
+    const { email, otp, newPassword } = req.body
 
-    if(!email || !otp || !newPassword){
+    if (!email || !otp || !newPassword) {
         throw new ApiError(400, "All Fields are required")
     }
 
@@ -304,7 +350,7 @@ const resetPassword = asyncHandler(async(req, res) => {
         email: email.toLowerCase().trim()
     })
 
-    if(!user){
+    if (!user) {
         throw new ApiError(404, "User Not Found")
     }
 
@@ -316,9 +362,9 @@ const resetPassword = asyncHandler(async(req, res) => {
         throw new ApiError(400, "OTP not found")
     }
 
-    
+
     if (user.resetOtpExpireAt < Date.now()) {
-       
+
         user.resetOtp = '';
         user.resetOtpExpireAt = 0;
         await user.save();
@@ -326,21 +372,21 @@ const resetPassword = asyncHandler(async(req, res) => {
     }
 
     if (user.resetOtp !== String(otp)) {
-       throw new ApiError(400, "Invalid OTP try again")
+        throw new ApiError(400, "Invalid OTP try again")
     }
 
-    
+
     user.resetOtp = "";
     user.resetOtpExpireAt = 0;
     user.password = newPassword;
     await user.save()
 
     return res
-    .status(200)
-    .json(
-        new ApiResponse(200, {}, "Passowrd Resetting Sucessfullly Login With New Password")
-    )
-    
+        .status(200)
+        .json(
+            new ApiResponse(200, {}, "Passowrd Resetting Sucessfullly Login With New Password")
+        )
+
 })
 
 export {
