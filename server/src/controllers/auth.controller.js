@@ -69,34 +69,34 @@ const register = asyncHandler(async (req, res) => {
 
 
 
-    //     const mailOption = {
-    //         from: `"Rohan Dev" <${process.env.SENDER_EMAIL}>`,
-    //         to: email,
-    //         subject: 'Welcome to MERN AUTH SITE',
-    //         text: `Welcome to greatstack website. Your account has been created with email id: ${email}`
-    //     }
-
-    //     try {
-    //         const info = await transporter.sendMail(mailOption);
-    //         console.log("Email sent:", info.response);
-    //     } catch (error) {
-    //         console.log("Email send failed");
-    //    }
-    try {
-        const sent = await sendEmail(
-            email,
-            "Welcome to Rohandev 🎉",
-            `
-        <h2>Welcome to Rohandev 🚀</h2>
-        <p>Hello ${name},</p>
-        <p>Your account has been created successfully.</p>
-        <p>We are happy to have you with us.</p>
-        <p>– Team Rohandev</p>
-        `
-        );
-    } catch (error) {
-        console.log("Email sending skipped");
+    const mailOption = {
+        from: `"Rohan Dev" <${process.env.SENDER_EMAIL}>`,
+        to: email,
+        subject: 'Welcome to MERN AUTH SITE',
+        text: `Welcome to greatstack website. Your account has been created with email id: ${email}`
     }
+
+    try {
+        const info = await transporter.sendMail(mailOption);
+        console.log("Email sent:", info.response);
+    } catch (error) {
+        console.log("Email send failed");
+    }
+    // try {
+    //     const sent = await sendEmail(
+    //         email,
+    //         "Welcome to Rohandev 🎉",
+    //         `
+    //     <h2>Welcome to Rohandev 🚀</h2>
+    //     <p>Hello ${name},</p>
+    //     <p>Your account has been created successfully.</p>
+    //     <p>We are happy to have you with us.</p>
+    //     <p>– Team Rohandev</p>
+    //     `
+    //     );
+    // } catch (error) {
+    //     console.log("Email sending skipped");
+    // }
 
 
 
@@ -185,21 +185,27 @@ const sendVerifyOtp = asyncHandler(async (req, res) => {
 
     const otp = String(Math.floor(100000 + Math.random() * 900000))
 
-    // const mailOption = {
-    //     from: `"Rohan Dev" <${process.env.SENDER_EMAIL}>`,
-    //     to: user.email,
-    //     subject: 'Account Verification OTP',
-    //     text: `Your OTP is ${otp}. Verify your account using this OTP.`
-    // }
+    const mailOption = {
+        from: `"Rohan Dev" <${process.env.SENDER_EMAIL}>`,
+        to: user.email,
+        subject: 'Account Verification OTP',
+        text: `Your OTP is ${otp}. Verify your account using this OTP.`
+    }
 
     try {
-        const sendmail = await sendEmail(user.email, 'Account Verification OTP', 
-        ` <h2>Verify Your Account 🔐</h2>
-        <p>Hello ${user.name},</p>
-        <p>Your OTP for account verification is:</p>
-        <h1>${otp}</h1>
-        <p>This OTP is valid for 10 minutes.</p>
-        <p>– Team Rohandev</p> ` )
+        // const sendmail = await sendEmail(user.email, 'Account Verification OTP', 
+        // ` <h2>Verify Your Account 🔐</h2>
+        // <p>Hello ${user.name},</p>
+        // <p>Your OTP for account verification is:</p>
+        // <h1>${otp}</h1>
+        // <p>This OTP is valid for 10 minutes.</p>
+        // <p>– Team Rohandev</p> ` )
+        try {
+            const info = await transporter.sendMail(mailOption);
+            console.log("Email sent:", info.response);
+        } catch (error) {
+            console.log("Email send failed");
+        }
 
 
         user.verifyOtp = otp;
@@ -282,12 +288,12 @@ const sendPassResetOtp = asyncHandler(async (req, res) => {
 
     const otp = String(Math.floor(100000 + Math.random() * 900000))
 
-    // const mailOption = {
-    //     from: `"Rohan Dev" <${process.env.SENDER_EMAIL}>`,
-    //     to: user.email,
-    //     subject: 'Password Reset OTP',
-    //     text: `Your OTP for resetting password is ${otp}. Use this OTP to proceed with resetting your password.`
-    // }
+    const mailOption = {
+        from: `"Rohan Dev" <${process.env.SENDER_EMAIL}>`,
+        to: user.email,
+        subject: 'Password Reset OTP',
+        text: `Your OTP for resetting password is ${otp}. Use this OTP to proceed with resetting your password.`
+    }
 
 
     if (user.resetOtpExpireAt && user.resetOtpExpireAt > Date.now()) {
@@ -295,47 +301,59 @@ const sendPassResetOtp = asyncHandler(async (req, res) => {
     }
 
     user.resetOtp = otp;
-        user.resetOtpExpireAt = Date.now() + 10 * 60 * 1000;
-        await user.save()
+    user.resetOtpExpireAt = Date.now() + 10 * 60 * 1000;
+    await user.save()
+
+    //     try {
+
+    //     const sentmail = await sendEmail(user.email,"Password Reset OTP",
+    //         `
+    //         <div style="font-family: Arial, sans-serif; line-height:1.6;">
+    //             <h2>Password Reset Request 🔑</h2>
+
+    //             <p>Hello ${user.name},</p>
+
+    //             <p>You requested to reset your password. Use the OTP below to continue:</p>
+
+    //             <h1 style="letter-spacing:4px;">${otp}</h1>
+
+    //             <p>This OTP is valid for <b>10 minutes</b>.</p>
+
+    //             <p>If you did not request a password reset, please ignore this email.</p>
+
+    //             <br>
+
+    //             <p>– Team Rohandev</p>
+    //         </div>
+    //     `
+    //     )
+
+
+    //         return res
+    //             .status(200)
+    //             .json(
+    //                 new ApiResponse(200, {}, "OTP Sent to your email")
+    //             )
+
+    //     } catch (error) {
+
+    //         user.resetOtp = undefined
+    //         user.resetOtpExpireAt = undefined
+    //         await user.save()
+
+    //         throw new ApiError(500, "Failed to send verification email. Please try again.");
+    //     }
 
     try {
-        
-    const sentmail = await sendEmail(user.email,"Password Reset OTP",
-        `
-        <div style="font-family: Arial, sans-serif; line-height:1.6;">
-            <h2>Password Reset Request 🔑</h2>
-
-            <p>Hello ${user.name},</p>
-
-            <p>You requested to reset your password. Use the OTP below to continue:</p>
-
-            <h1 style="letter-spacing:4px;">${otp}</h1>
-
-            <p>This OTP is valid for <b>10 minutes</b>.</p>
-
-            <p>If you did not request a password reset, please ignore this email.</p>
-
-            <br>
-
-            <p>– Team Rohandev</p>
-        </div>
-    `
-    )
-
-
-        return res
-            .status(200)
-            .json(
-                new ApiResponse(200, {}, "OTP Sent to your email")
-            )
-
+        const info = await transporter.sendMail(mailOption);
+        console.log("Email sent:", info.response);
+          return res
+                .status(200)
+                .json(
+                    new ApiResponse(200, {}, "OTP Sent to your email")
+                )
     } catch (error) {
-
-        user.resetOtp = undefined
-        user.resetOtpExpireAt = undefined
-        await user.save()
-
-        throw new ApiError(500, "Failed to send verification email. Please try again.");
+        console.log("Email send failed");
     }
 })
 
