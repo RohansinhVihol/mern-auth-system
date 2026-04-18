@@ -4,10 +4,21 @@ A complete **authentication & authorization system** built with **JWT**, **Email
 
 ---
 
+![Node.js](https://img.shields.io/badge/Backend-Node.js-green)
+![Express.js](https://img.shields.io/badge/Framework-Express.js-lightgrey)
+![React](https://img.shields.io/badge/Frontend-React-blue)
+![MongoDB](https://img.shields.io/badge/Database-MongoDB-green)
+![JWT](https://img.shields.io/badge/Auth-JWT-orange)
+
+Production-ready MERN authentication system with secure email OTP workflow 🚀
+
 ## 🌐 Live Demo
 
 🔗 Frontend Live Link:  
 https://mern-auth-client-mu.vercel.app
+
+🔗 Backend API:
+https://mern-auth-server-mu.vercel.app
 
 ---
 
@@ -184,6 +195,24 @@ cd client
 npm install
 npm run dev
 ```
+
+---
+
+## 📊 Project Status
+
+✅ Completed  
+✅ Production-ready authentication system  
+✅ Ready for portfolio showcase
+
+---
+
+## 🏗 Architecture Highlights
+
+* Secure JWT authentication using HTTP-only cookies
+* Email OTP verification system
+* Password reset with OTP validation
+* Rate limiting protection against OTP abuse
+* Modular MVC backend structure
 
 ---
 
