@@ -14,11 +14,11 @@ Production-ready MERN authentication system with secure email OTP workflow 🚀
 
 ## 🌐 Live Demo
 
-🔗 Frontend Live Link:  
-https://mern-auth-client-mu.vercel.app
+🚀 **Frontend:**  
+👉 https://mern-auth-client-mu.vercel.app
 
-🔗 Backend API:
-https://mern-auth-server-mu.vercel.app
+⚙️ **Backend API:**  
+👉 https://mern-auth-server-mu.vercel.app
 
 ---
 
