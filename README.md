@@ -3,12 +3,11 @@
 A complete **authentication & authorization system** built with **JWT**, **Email OTP verification**, and **secure password reset flow**. This project covers real-world auth features used in production apps.
 
 ---
-
-![Node.js](https://img.shields.io/badge/Backend-Node.js-green)
-![Express.js](https://img.shields.io/badge/Framework-Express.js-lightgrey)
-![React](https://img.shields.io/badge/Frontend-React-blue)
-![MongoDB](https://img.shields.io/badge/Database-MongoDB-green)
-![JWT](https://img.shields.io/badge/Auth-JWT-orange)
+![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
+![Express.js](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white)
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)
+![JWT](https://img.shields.io/badge/JWT-black?style=for-the-badge&logo=jsonwebtokens)
 
 Production-ready MERN authentication system with secure email OTP workflow 🚀
 
