@@ -228,8 +228,10 @@ npm run dev
 
 **Rohansinh Vihol**
 
-BCA Student | Full Stack Developer
+Full-Stack Developer  
+BCA Student | Future Software Engineer 🚀
 
----
+🔗 GitHub: https://github.com/RohansinhVihol  
+🔗 LinkedIn: www.linkedin.com/in/rohansinhvihol
 
 ⭐ If you like this project, give it a star!
