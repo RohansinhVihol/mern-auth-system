@@ -4,6 +4,13 @@ A complete **authentication & authorization system** built with **JWT**, **Email
 
 ---
 
+## 🌐 Live Demo
+
+🔗 Frontend Live Link:  
+https://mern-auth-client-mu.vercel.app
+
+---
+
 ## 🚀 Features
 
 ✅ User Signup (Register)
